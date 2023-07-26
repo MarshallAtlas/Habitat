@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "417303009853",
+    "project_id": "habitat-14e37",
+    "storage_bucket": "habitat-14e37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417303009853:android:3af0cca9773d793a836854",
+        "android_client_info": {
+          "package_name": "ph.edu.dlsu.mobdeve.florendo.mapa.habitat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417303009853-2tmnosf4c4ng6fmaeq2s4f7mk466q24s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvXPhJLZZGDMAlcNFajDmoEmduLX4uxVA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417303009853-2tmnosf4c4ng6fmaeq2s4f7mk466q24s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
