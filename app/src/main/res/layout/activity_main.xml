@@ -21,7 +21,17 @@
         android:layout_width="357dp"
         android:layout_height="103dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="524dp"
+        android:layout_marginTop="476dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/input_box" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="356dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="384dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/input_box" />
@@ -31,36 +41,26 @@
         android:layout_width="250dp"
         android:layout_height="51dp"
         android:layout_marginStart="76dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="36dp"
         android:background="#ffffff"
         android:ems="10"
         android:inputType="textPassword"
         android:padding="15dp"
-        android:text="Password"
+        android:hint="Password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Input_Uname" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="356dp"
-        android:layout_height="105dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="432dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/input_box" />
 
     <EditText
         android:id="@+id/Input_Uname"
         android:layout_width="251dp"
         android:layout_height="55dp"
         android:layout_marginStart="76dp"
-        android:layout_marginTop="452dp"
+        android:layout_marginTop="404dp"
         android:background="#ffffff"
         android:ems="10"
         android:inputType="text"
         android:padding="15dp"
-        android:text="Username"
+        android:hint="Username"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,12 +70,27 @@
         android:layout_width="330dp"
         android:layout_height="64dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#A2B867"
+        android:layout_marginTop="36dp"
+        android:onClick="loginValidate"
+
+        android:backgroundTint="#57710F"
         android:text="Login"
         android:textColor="#F3EDED"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Input_Pass" />
+
+    <Button
+        android:id="@+id/signUp_Button"
+        android:layout_width="330dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#A2B867"
+        android:text="SignUp"
+        android:onClick="launchSignUp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

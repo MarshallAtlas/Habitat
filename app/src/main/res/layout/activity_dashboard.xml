@@ -9,26 +9,28 @@
 
     <ImageView
         android:id="@+id/dash_background"
-        android:layout_width="match_parent"
-        android:layout_height="686dp"
-        android:layout_marginTop="192dp"
+        android:layout_width="413dp"
+        android:layout_height="573dp"
         android:alpha=".7"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dash_background" />
 
+    <!--    nav bar-->
+
     <LinearLayout
-        android:layout_width="382dp"
-        android:layout_height="545dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:id="@+id/linearLayout2"
+        android:layout_width="413dp"
+        android:layout_height="467dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dash_background">
 
         <EditText
             android:id="@+id/Search_bar"
-            android:layout_width="278dp"
+            android:layout_width="308dp"
             android:layout_height="48dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
@@ -38,58 +40,15 @@
             android:inputType="text"
             android:padding="5dp"
             android:text="Search" />
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/nav_base"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/nav_base" />
-
-<!--    nav bar-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="104dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/Shop_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="66dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="25dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/shop_icon" />
-
-        <ImageView
-            android:id="@+id/Add_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/add_icon" />
-
-        <ImageView
-            android:id="@+id/Collection_Icon"
-            android:layout_width="104dp"
-            android:layout_height="66dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="25dp"
-            app:srcCompat="@drawable/habitat_logoo" />
 
     </LinearLayout>
 
     <ImageView
         android:id="@+id/HabitatIcon"
-        android:layout_width="149dp"
-        android:layout_height="144dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="130dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/dash_background"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/habitat_icon" />
@@ -135,6 +94,7 @@
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/inter"
         android:text="3/3"
+        android:textSize="20sp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/GemIcon"
         app:layout_constraintTop_toTopOf="parent" />
@@ -148,8 +108,64 @@
         android:fontFamily="@font/inter"
         android:text="Hello User"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/nav_base"
+        android:layout_width="410dp"
+        android:layout_height="83dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:srcCompat="@drawable/nav_base" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/Shop_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="66dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/shop_icon" />
+
+        <ImageView
+            android:id="@+id/Add_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/add_icon" />
+
+        <ImageView
+            android:id="@+id/Collection_Icon"
+            android:layout_width="104dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            app:srcCompat="@drawable/habitat_logoo" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="Logout"
+        android:onClick="logout"
+        android:textColor="#E61D1D"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/User_Welcome" />
 
     <!--    put recycler view inside dashbackground-->
 

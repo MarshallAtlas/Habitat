@@ -20,41 +20,13 @@
         android:id="@+id/Sign_Email"
         android:layout_width="251dp"
         android:layout_height="55dp"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="216dp"
         android:background="#ffffff"
         android:ems="10"
+        android:hint="Email"
         android:inputType="text"
         android:padding="15dp"
-        android:text="Email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/Sign_pass"
-        android:layout_width="251dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="292dp"
-        android:background="#ffffff"
-        android:ems="10"
-        android:inputType="text"
-        android:padding="15dp"
-        android:text="UserName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/Sign_Uname"
-        android:layout_width="251dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="376dp"
-        android:background="#ffffff"
-        android:ems="10"
-        android:inputType="text"
-        android:padding="15dp"
-        android:text="Password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,13 +34,41 @@
         android:id="@+id/Sign_ConPassword"
         android:layout_width="251dp"
         android:layout_height="55dp"
-        android:layout_marginStart="88dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="456dp"
         android:background="#ffffff"
         android:ems="10"
+        android:hint="Confirm Password"
         android:inputType="text"
         android:padding="15dp"
-        android:text="Confirm Password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/Sign_Pass"
+        android:layout_width="251dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="376dp"
+        android:background="#ffffff"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="text"
+        android:padding="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/Sign_Uname"
+        android:layout_width="251dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="292dp"
+        android:background="#ffffff"
+        android:ems="10"
+        android:hint="UserName"
+        android:inputType="text"
+        android:padding="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,7 +79,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="28dp"
         android:backgroundTint="#A2B867"
-        android:text="Login"
+        android:text="Signup"
+        android:onClick="signupButton"
         android:textColor="#F3EDED"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
