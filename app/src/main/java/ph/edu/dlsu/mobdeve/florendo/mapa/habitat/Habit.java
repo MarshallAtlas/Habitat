@@ -1,12 +1,15 @@
 package ph.edu.dlsu.mobdeve.florendo.mapa.habitat;
 
+import android.util.Log;
+
 public class Habit {
     private String color;
-    private String habitName;
-    private int habitFreeze;
+    private String habit_name;
+    private int habit_freeze;
     private boolean habitDone;
     private int streak;
-    private String userId;
+    private String user_id;
+    private static final String TAG = "HabitAdapter"; // Define TAG here
 
     // Default constructor (required for Firestore)
     public Habit() {
@@ -14,13 +17,13 @@ public class Habit {
     }
 
     // Constructor with parameters
-    public Habit(String color, String habitName, int habitFreeze, boolean habitDone, int streak, String userId) {
+    public Habit(String color, String habit_name, int habit_freeze, boolean habitDone, int streak, String user_id) {
         this.color = color;
-        this.habitName = habitName;
-        this.habitFreeze = habitFreeze;
+        this.habit_name = habit_name;
+        this.habit_freeze = habit_freeze;
         this.habitDone = habitDone;
         this.streak = streak;
-        this.userId = userId;
+        this.user_id = user_id;
     }
 
     // Getters and Setters (required for Firestore)
@@ -33,19 +36,20 @@ public class Habit {
     }
 
     public String getHabitName() {
-        return habitName;
+        Log.d(TAG, "getHabitName: " + habit_name);
+        return habit_name;
     }
 
     public void setHabitName(String habitName) {
-        this.habitName = habitName;
+        this.habit_name = habitName;
     }
 
     public int getHabitFreeze() {
-        return habitFreeze;
+        return habit_freeze;
     }
 
     public void setHabitFreeze(int habitFreeze) {
-        this.habitFreeze = habitFreeze;
+        this.habit_freeze = habitFreeze;
     }
 
     public boolean isHabitDone() {
@@ -65,11 +69,11 @@ public class Habit {
     }
 
     public String getUserId() {
-        return userId;
+        return user_id;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.user_id = userId;
     }
 }
 

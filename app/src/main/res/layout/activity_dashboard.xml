@@ -7,30 +7,30 @@
     android:background="#CBD7AB"
     tools:context=".Dashboard">
 
+    <!--    nav bar-->
+
     <ImageView
-        android:id="@+id/dash_background"
-        android:layout_width="413dp"
-        android:layout_height="573dp"
-        android:alpha=".7"
+        android:id="@+id/imageView3"
+        android:layout_width="392dp"
+        android:layout_height="650dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/dash_background" />
 
-    <!--    nav bar-->
-
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="413dp"
-        android:layout_height="467dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="363dp"
+        android:layout_height="540dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dash_background">
+        app:layout_constraintTop_toBottomOf="@+id/HabitatIcon">
 
         <EditText
             android:id="@+id/Search_bar"
-            android:layout_width="308dp"
+            android:layout_width="260dp"
             android:layout_height="48dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
@@ -41,6 +41,12 @@
             android:padding="5dp"
             android:text="Search" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Habit_List"
+            android:layout_width="match_parent"
+            android:layout_height="493dp"
+            android:layout_marginTop="15sp" />
+
     </LinearLayout>
 
     <ImageView
@@ -48,9 +54,10 @@
         android:layout_width="130dp"
         android:layout_height="110dp"
         android:layout_marginStart="140dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/dash_background"
+
+        android:layout_marginTop="68dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/habitat_icon" />
 
     <ImageView
@@ -114,10 +121,10 @@
 
     <ImageView
         android:id="@+id/nav_base"
-        android:layout_width="410dp"
-        android:layout_height="83dp"
+        android:layout_width="413dp"
+        android:layout_height="105dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:srcCompat="@drawable/nav_base" />
 
     <LinearLayout
