@@ -33,7 +33,17 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit Chabit = HabitList.get(position);
         holder.habit_name.setText(Chabit.getHabitName());
+
         Log.d(TAG, "onBindViewHolder: " + Chabit.getHabitName());
+        //to make it clickable
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(position);
+                }
+            }
+        });
 
     }
 
@@ -54,5 +64,15 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
             habit_name = habitView.findViewById(R.id.tv_habit_name);
 
         }
+
+    }
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener itemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 }

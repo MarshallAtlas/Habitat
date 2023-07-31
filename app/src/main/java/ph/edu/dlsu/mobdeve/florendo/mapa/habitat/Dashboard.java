@@ -3,6 +3,7 @@ package ph.edu.dlsu.mobdeve.florendo.mapa.habitat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,18 +54,8 @@ public class Dashboard extends AppCompatActivity {
     private HabitAdapter HAdapter; // habait adapter
     private ArrayList<Habit> habitList;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //TEST
-    private ArrayList<Habit> generateStaticHabitList() {
-        ArrayList<Habit> staticHabitList = new ArrayList<>();
+    private static final String TAG = "UserID"; // Define TAG here
 
-        // Add some hardcoded habit names to the list
-        staticHabitList.add(new Habit("Red", "Habit 1", 1, false, 0, "user_id_1"));
-        staticHabitList.add(new Habit("Blue", "Habit 2", 0, true, 2, "user_id_1"));
-        staticHabitList.add(new Habit("Green", "Habit 3", 2, false, 1, "user_id_2"));
-        // Add more habits as needed...
-
-        return staticHabitList;
-    }
 
 
     @Override
@@ -89,14 +82,34 @@ public class Dashboard extends AppCompatActivity {
         habitList = new ArrayList<Habit>();
         //habitList = generateStaticHabitList();//
         HAdapter = new HabitAdapter(Dashboard.this, habitList);
-        recyclerView.setAdapter(HAdapter);
+        recyclerView.setAdapter(this.HAdapter);
 
-
+        //snaphelper
+        SnapHelper CSnapHelper = new LinearSnapHelper();
+        CSnapHelper.attachToRecyclerView(this.recyclerView);
 
         // Set the static habit list to the adapter
 
         eventChangeListener();
 
+        // onclick listener for the recyclerview items
+        HAdapter.setOnItemClickListener(new HabitAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Get the clicked habit from the habitList based on its position
+                Habit clickedHabit = habitList.get(position);
+
+                // Create an Intent to start the HabitView activity
+                Intent intent = new Intent(Dashboard.this, HabitatView.class);
+
+                // Pass the habit details as extras through the Intent
+                intent.putExtra("habit", clickedHabit);
+
+                // Start the HabitView activity
+                startActivity(intent);
+
+            }
+        });
 
 
         // set name
@@ -119,6 +132,10 @@ public class Dashboard extends AppCompatActivity {
 
     public void eventChangeListener() {
         // Listen for changes in the "habits" collection
+
+        FirebaseUser CUser = FirebaseAuth.getInstance().getCurrentUser();
+        String CUserID = CUser.getUid();
+
         db.collection("habits")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -128,16 +145,18 @@ public class Dashboard extends AppCompatActivity {
                             return;
                         }
 
+                        //clear habit list
+                        habitList.clear();
+
+
                         // Check if the value is not null and there are changes
-                        if (value != null && !value.getDocumentChanges().isEmpty()) {
-                            for (DocumentChange dc : value.getDocumentChanges()) {
-                                if (dc.getType() == DocumentChange.Type.ADDED) {
-//                                    Habit habit = dc.getDocument().toObject(Habit.class);
-//                                    habitList.add(habit);
-                                    //Toast.makeText(Dashboard.this, "INSIDE EVENT CHANGE", Toast.LENGTH_SHORT).show();
-                                    habitList.add(dc.getDocument().toObject(Habit.class));
-
-
+                        if (value != null && !value.isEmpty()) {
+                            for (DocumentSnapshot doc : value.getDocuments()) {
+                                String habitUserId = doc.getString("userId");
+                                // Toast.makeText(Dashboard.this,  "Here is the user "+ habitUserId, Toast.LENGTH_SHORT).show();
+                                if (habitUserId.equals(CUserID)) {
+                                    Habit habit = doc.toObject(Habit.class);
+                                    habitList.add(habit);
                                 }
                             }
 
@@ -146,6 +165,35 @@ public class Dashboard extends AppCompatActivity {
                         }
                     }
                 });
+
+//        db.collection("habits")
+//                .whereEqualTo("user_id", CUserID)
+//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                        if (error != null) {
+//                            Toast.makeText(Dashboard.this, "RECYCLER FAIL", Toast.LENGTH_SHORT).show();
+//                            return;
+//                        }
+//
+//                        // Check if the value is not null and there are changes
+//                        if (value != null && !value.getDocumentChanges().isEmpty()) {
+//                            for (DocumentChange dc : value.getDocumentChanges()) {
+//                                if (dc.getType() == DocumentChange.Type.ADDED) {
+//                                   Habit habit = dc.getDocument().toObject(Habit.class);
+//                                   habitList.add(habit);
+//                                    //Toast.makeText(Dashboard.this, "INSIDE EVENT CHANGE", Toast.LENGTH_SHORT).show();
+//                                    //habitList.add(dc.getDocument().toObject(Habit.class));
+//
+//
+//                                }
+//                            }
+//
+//                            // Notify the adapter about the data change
+//                            HAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                });
     }
 
 
@@ -170,29 +218,29 @@ public class Dashboard extends AppCompatActivity {
 
 
     }
-
-    private void retrieveHabits(String userId) {
-        db.collection("habits")
-                .whereEqualTo("user_id", userId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        habitList.clear();
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Habit habit = documentSnapshot.toObject(Habit.class);
-                            habitList.add(habit);
-                        }
-                        HAdapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Dashboard.this, "Failed to retrieve habits", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+//    TRY TO RETRIEVE HABITS IN ANOTEHR WAY
+//    private void retrieveHabits(String userId) {
+//        db.collection("habits")
+//                .whereEqualTo("user_id", userId)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        habitList.clear();
+//                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+//                            Habit habit = documentSnapshot.toObject(Habit.class);
+//                            habitList.add(habit);
+//                        }
+//                        HAdapter.notifyDataSetChanged();
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(Dashboard.this, "Failed to retrieve habits", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
 
     // get gemcoutn and freeze count
     public void retrieve() {
@@ -219,10 +267,22 @@ public class Dashboard extends AppCompatActivity {
         });
 
     }
-
+    // NAVIGATION STUFF
     public void logout (View CView){
         //terminates sessions
         FirebaseAuth.getInstance().signOut();
         this.finish();
     }
+
+    public void launchShop (View CView){
+        Intent CIntent = new Intent(Dashboard.this, Shop.class);
+        this.startActivity(CIntent);
+    }
+
+    public void launchCreateHabit (View CView){
+        Intent CIntent = new Intent(Dashboard.this, CreateHabit.class);
+        this.startActivity(CIntent);
+    }
+
+
 }
