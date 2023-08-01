@@ -76,7 +76,6 @@ public class Dashboard extends AppCompatActivity {
         // test we put habits into an array
         CollectionReference HabRefs = db.collection("habits");
 
-        // Assuming you have a reference to the Firestore database
 
 
         habitList = new ArrayList<Habit>();

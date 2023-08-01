@@ -110,16 +110,16 @@ public class SignUp extends AppCompatActivity {
         String conPassword = CConPass.getText().toString().trim();
 
         if (email.isEmpty() || username.isEmpty() || password.isEmpty() || conPassword.isEmpty()) {
-            // Display a toast message if any of the fields are empty
+
             Toast.makeText(this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
         } else if (password.length() < 8) {
-            // Display a toast message if the password is less than 8 characters
+
             Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show();
         } else if (!password.equals(conPassword)) {
-            // Display a toast message if password and confirm password do not match
+
             Toast.makeText(this, "Password and Confirm Password do not match", Toast.LENGTH_SHORT).show();
         } else {
-            // All fields are filled, password is at least 8 characters long, and password matches confirmation
+
             createUser();
         }
     }

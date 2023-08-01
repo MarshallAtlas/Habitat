@@ -66,12 +66,18 @@ public class HabitatView extends AppCompatActivity {
 
             //reset
             if(compareStrings(habit.getLastUpdate(), currentDate) == -1){ // if its been 2 days since last update
-                // if the getLastUpdate +1  is less than currentdate
-                // then reset streak
-                int resetStreak = 0;
-                habit.setStreak((resetStreak));
-                updateStreakInFirestore(habit.getHabitName(), resetStreak, currentDate);
-                this.streak.setText(String.valueOf(habit.getStreak())); // update display
+                if(compareStrings(habit.getLastUpdate(), "0") != 0) {
+                    // if its the first time this was accessed then do not reset
+                    Toast.makeText(this, "Just in time" + habit.getLastUpdate(), Toast.LENGTH_SHORT).show();
+                }else{
+                    // if the getLastUpdate +1  is less than currentdate
+                    // then reset streak
+                    int resetStreak = 0;
+                    habit.setStreak((resetStreak));
+                    Toast.makeText(HabitatView.this, "You missed a habit :(", Toast.LENGTH_SHORT).show();
+                    updateStreakInFirestore(habit.getHabitName(), resetStreak, currentDate);
+                    this.streak.setText(String.valueOf(habit.getStreak())); // update display
+                }
 
             }
 
@@ -127,10 +133,10 @@ public class HabitatView extends AppCompatActivity {
 
     // This method updates the "streak" and "habitDone" fields in Firestore
     private void updateHabitInFirestore(String habitName, int newStreak, boolean habitDone, String lastupdate) {
-        // Assuming you have a reference to the Firestore database
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Assuming "habits" is the collection where you store habits
+
         CollectionReference habitsRef = db.collection("habits");
 
         // Query for the specific habit using its name
@@ -179,10 +185,10 @@ public class HabitatView extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Assuming "habits" is the collection where you store habits
+
         CollectionReference habitsRef = db.collection("habits");
 
-        // Query for the specific habit using its name
+
         habitsRef.whereEqualTo("habitName", habitName)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -206,7 +212,7 @@ public class HabitatView extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
-                                            Toast.makeText(HabitatView.this, "You missed a habit :(", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(HabitatView.this, "You missed a habit :(", Toast.LENGTH_SHORT).show();
 
                                         }
                                     })
@@ -230,8 +236,7 @@ public class HabitatView extends AppCompatActivity {
             num2 = Integer.parseInt(str2); // current date
             num1++;
         } catch (NumberFormatException e) {
-            // Handle the scenario where either or both strings are not valid integers
-            // For example, you can return a special value or throw an exception
+
             return 0;
         }
 
@@ -243,7 +248,7 @@ public class HabitatView extends AppCompatActivity {
             // str2 has a higher value than str1
             return -1;
         } else {
-            // Both integers are equal
+            // Both are equal
             return 0;
         }
     }

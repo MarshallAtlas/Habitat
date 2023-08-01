@@ -27,7 +27,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvItemName = itemView.findViewById(R.id.item_name_collection); // Replace with the actual TextView ID in your purchased_item layout
+            tvItemName = itemView.findViewById(R.id.item_name_collection);
            // picture???
         }
     }

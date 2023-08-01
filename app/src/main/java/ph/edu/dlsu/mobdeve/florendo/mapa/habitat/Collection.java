@@ -110,12 +110,10 @@ public class Collection extends AppCompatActivity {
     }
 
     private String getItemImageUrl(String itemId) {
-        // Replace "your_bucket_name" with the actual name of your Firebase Storage bucket
-        // Assuming the images are stored in a folder called "items" within the bucket
-        String storageReference = "gs://habitat-14e37.appspot.com" + itemId + ".png"; // Replace with the appropriate file extension
 
-        // You can also use HTTPS URL by calling getDownloadUrl() and handling its callback.
-        // For simplicity, we'll use the storageReference directly.
+        String storageReference = "gs://habitat-14e37.appspot.com" + itemId + ".png"; //
+
+
         return storageReference;
     }
 

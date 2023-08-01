@@ -15,7 +15,7 @@ public class Habit implements Serializable{
 
     // Default constructor (required for Firestore)
     public Habit() {
-        // Default constructor is necessary for Firestore to map data to objects.
+
     }
 
     // Constructor with parameters
