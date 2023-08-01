@@ -20,6 +20,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -160,7 +162,9 @@ public class Shop extends AppCompatActivity {
                     String name = document.getString("name");
                     int price = document.getLong("price").intValue();
 
-                    ShopItems shopItem = new ShopItems(item_id, name, price);
+                    String imageUrl = getItemImageUrl(item_id); // Implement a method to fetch the image URL
+
+                    ShopItems shopItem = new ShopItems(item_id, name, price, imageUrl);
                     ShopList.add(shopItem);
                 }
 
@@ -176,11 +180,11 @@ public class Shop extends AppCompatActivity {
                     }
                 });
             } else {
-                // Handle the case where data retrieval from Firestore fails
-                // For example, display an error message or try again later
+                Toast.makeText(this, "FAIL TO RETRIEVE", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
 
     //get user gemcount
@@ -204,6 +208,16 @@ public class Shop extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getItemImageUrl(String itemId) {
+        // Replace "your_bucket_name" with the actual name of your Firebase Storage bucket
+        // Assuming the images are stored in a folder called "items" within the bucket
+        String storageReference = "gs://habitat-14e37.appspot.com/" + itemId + ".png"; // Replace with the appropriate file extension
+
+        // You can also use HTTPS URL by calling getDownloadUrl() and handling its callback.
+        // For simplicity, we'll use the storageReference directly.
+        return storageReference;
     }
 
 }

@@ -284,5 +284,10 @@ public class Dashboard extends AppCompatActivity {
         this.startActivity(CIntent);
     }
 
+    public void launchCollection(View CView){
+        Intent CIntent = new Intent(Dashboard.this, Collection.class);
+        this.startActivity(CIntent);
+    }
+
 
 }

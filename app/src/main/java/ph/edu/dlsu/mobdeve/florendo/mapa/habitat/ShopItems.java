@@ -5,16 +5,18 @@ public class ShopItems {
     private String item_id;
     private String name;
     private int price;
+    private String imageUrl;
 
     public ShopItems() {
         // Default constructor is necessary for Firestore to map data to objects.
     }
 
-    public ShopItems(String item_id, String name, int price) {
+    public ShopItems(String item_id, String name, int price, String imageUrl) {
 
         this.item_id = item_id;
         this.name = name;
         this.price = price;
+        this.imageUrl = imageUrl;
     }
 
     public String getItem_id() {
@@ -27,6 +29,11 @@ public class ShopItems {
 
     public String getItemName() {
         return name;
+    }
+
+    public String getImageUrl(){return imageUrl;}
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
     }
 
     public void setItem_id(String item_id) {

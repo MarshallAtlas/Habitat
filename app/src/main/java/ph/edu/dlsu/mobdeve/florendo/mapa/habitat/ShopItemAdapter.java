@@ -3,10 +3,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ViewHolder> {
 
     private ArrayList<ShopItems> shopItemsList;
+
 
     private OnItemClickListener itemClickListener;
 
@@ -28,12 +32,13 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvItemName;
         private TextView tvItemPrice;
+        private ImageView ivItemImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvItemName = itemView.findViewById(R.id.item_name_display); // Replace with the actual TextView ID in your item layout
-            tvItemPrice = itemView.findViewById(R.id.item_price_display); // Replace with the actual TextView ID in your item layout
-
+            tvItemName = itemView.findViewById(R.id.item_name_display);
+            tvItemPrice = itemView.findViewById(R.id.item_price_display);
+            ivItemImage = itemView.findViewById(R.id.imageView6);
 
         }
     }
@@ -61,6 +66,10 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ViewHo
                 }
             }
         });
+
+        Glide.with(holder.itemView.getContext())
+                .load(shopItem.getImageUrl())
+                .into(holder.ivItemImage);
     }
 
     @Override
@@ -76,5 +85,6 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ViewHo
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
     }
+
 }
 
