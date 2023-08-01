@@ -57,12 +57,28 @@ public class HabitatView extends AppCompatActivity {
 
 
         if(habit.getLastUpdate().equals(currentDate)){
-
-        }else{
+            doneButton.setText("You are done for today!");
+            doneButton.setBackgroundTintList(ContextCompat.getColorStateList(HabitatView.this, R.color.button_done_color));
+        }else{ // if its the next day
             // if false reset text and color
             doneButton.setText("Habit Done");
             doneButton.setBackgroundTintList(ContextCompat.getColorStateList(HabitatView.this, R.color.button_normal_color));
+
+            //reset
+            if(compareStrings(habit.getLastUpdate(), currentDate) == -1){ // if its been 2 days since last update
+                // if the getLastUpdate +1  is less than currentdate
+                // then reset streak
+                int resetStreak = 0;
+                habit.setStreak((resetStreak));
+                updateStreakInFirestore(habit.getHabitName(), resetStreak, currentDate);
+                this.streak.setText(String.valueOf(habit.getStreak())); // update display
+
+            }
+
         }
+
+        // check reset
+
 
 
 
@@ -99,12 +115,15 @@ public class HabitatView extends AppCompatActivity {
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.commit(); // Use commit() instead of apply()
+                    habit.setLastUpdate(currentDate);
                 }
             }
         });
 
 
     }
+
+    // HABIT UPDATE
 
     // This method updates the "streak" and "habitDone" fields in Firestore
     private void updateHabitInFirestore(String habitName, int newStreak, boolean habitDone, String lastupdate) {
@@ -155,6 +174,79 @@ public class HabitatView extends AppCompatActivity {
     }
 
 
+    //STREAK RESET
+    void updateStreakInFirestore(String habitName, int streak, String currentdate){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Assuming "habits" is the collection where you store habits
+        CollectionReference habitsRef = db.collection("habits");
+
+        // Query for the specific habit using its name
+        habitsRef.whereEqualTo("habitName", habitName)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        // There should be only one document that matches the query
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                            String habitDocumentId = document.getId();
+
+                            // Get the current habit details from Firestore
+                            Habit habit = document.toObject(Habit.class);
+
+                            // Modify the streak and "habitDone"
+                            habit.setStreak(streak);
+                            habit.setLastUpdate(currentdate);
+
+                            // Update the habit document in Firestore
+                            habitsRef.document(habitDocumentId)
+                                    .set(habit) // Update the document with the modified habit object
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Toast.makeText(HabitatView.this, "You missed a habit :(", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(HabitatView.this, "I DONT FEEL SOO GOD ", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+    }
+
+    public int compareStrings(String str1, String str2) {
+        int num1, num2;
+
+        try {
+            num1 = Integer.parseInt(str1); //last update
+            num2 = Integer.parseInt(str2); // current date
+            num1++;
+        } catch (NumberFormatException e) {
+            // Handle the scenario where either or both strings are not valid integers
+            // For example, you can return a special value or throw an exception
+            return 0;
+        }
+
+        // Compare the two integers
+        if (num1 > num2) {
+            // str1 has a higher value than str2
+            return 1;
+        } else if (num1 < num2) {
+            // str2 has a higher value than str1
+            return -1;
+        } else {
+            // Both integers are equal
+            return 0;
+        }
+    }
 
 
 

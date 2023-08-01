@@ -70,7 +70,7 @@
 
     <LinearLayout
         android:layout_width="382dp"
-        android:layout_height="545dp"
+        android:layout_height="499dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:orientation="vertical"
@@ -79,7 +79,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/gem_display_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -91,6 +91,11 @@
             android:text="20 gems"
             android:textColor="#F4F2F2"
             android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/shop_item_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
