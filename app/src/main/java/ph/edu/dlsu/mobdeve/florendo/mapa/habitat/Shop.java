@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,44 +99,49 @@ public class Shop extends AppCompatActivity {
 
                             // Check if the clicked item's item_id is already in purchasedItems
                             if (purchasedItems == null || !purchasedItems.contains(shopItem.getItem_id())) {
-                                // Item is not purchased yet, so add it to the purchasedItems array
-                                if (purchasedItems == null) {
-                                    purchasedItems = new ArrayList<>();
-                                }
-                                purchasedItems.add(shopItem.getItem_id());
-
-                                // Deduct the item price from the userGem
                                 int itemPrice = shopItem.getPrice();
-                                userGem -= itemPrice;
-                                long userFreeze = document.getLong("userFreeze");
+                                if (userGem >= itemPrice) {
+                                    // Item is not purchased yet, so add it to the purchasedItems array
+                                    if (purchasedItems == null) {
+                                        purchasedItems = new ArrayList<>();
+                                    }
+                                    purchasedItems.add(shopItem.getItem_id());
 
-                                if (shopItem.getItem_id().equals("9I9f1ln3yAa0RLAwUhfG")) {
-                                    userFreeze++;
+                                    // Deduct the item price from the userGem
+
+                                    userGem -= itemPrice;
+                                    long userFreeze = document.getLong("userFreeze");
+
+                                    if (shopItem.getItem_id().equals("9I9f1ln3yAa0RLAwUhfG")) {
+                                        userFreeze++;
+                                    }
+
+                                    // Update the user's purchasedItems and userGem in Firestore
+                                    Map<String, Object> updates = new HashMap<>();
+                                    updates.put("purchasedItems", purchasedItems);
+                                    updates.put("userGem", userGem);
+                                    updates.put("userFreeze", userFreeze);
+
+
+                                    userRef.update(updates)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    // Update successful, show a toast and refresh the adapter
+                                                    Toast.makeText(Shop.this, "ITEM PURCHASED", Toast.LENGTH_SHORT).show();
+                                                    SAdapter.notifyDataSetChanged();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Update failed, show a toast
+                                                    Toast.makeText(Shop.this, "Failed to purchase item.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }else{
+                                    Toast.makeText(Shop.this, "YOU DO NOT HAVE ENOUGH MONEY", Toast.LENGTH_SHORT).show();
                                 }
-
-                                // Update the user's purchasedItems and userGem in Firestore
-                                Map<String, Object> updates = new HashMap<>();
-                                updates.put("purchasedItems", purchasedItems);
-                                updates.put("userGem", userGem);
-                                updates.put("userFreeze", userFreeze);
-
-
-                                userRef.update(updates)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // Update successful, show a toast and refresh the adapter
-                                                Toast.makeText(Shop.this, "ITEM PURCHASED", Toast.LENGTH_SHORT).show();
-                                                SAdapter.notifyDataSetChanged();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Update failed, show a toast
-                                                Toast.makeText(Shop.this, "Failed to purchase item.", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
                             } else {
                                 // Item is already purchased, show a toast
                                 Toast.makeText(Shop.this, "You already purchased this.", Toast.LENGTH_SHORT).show();
@@ -218,6 +225,18 @@ public class Shop extends AppCompatActivity {
         // You can also use HTTPS URL by calling getDownloadUrl() and handling its callback.
         // For simplicity, we'll use the storageReference directly.
         return storageReference;
+    }
+
+    public void launchCreateHabit (View CView){
+        Intent CIntent = new Intent(Shop.this, CreateHabit.class);
+        this.startActivity(CIntent);
+        this.finish();
+    }
+
+    public void launchCollection(View CView){
+        Intent CIntent = new Intent(Shop.this, Collection.class);
+        this.startActivity(CIntent);
+        this.finish();
     }
 
 }

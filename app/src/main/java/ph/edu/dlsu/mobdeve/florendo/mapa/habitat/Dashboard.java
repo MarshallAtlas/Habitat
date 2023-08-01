@@ -89,7 +89,7 @@ public class Dashboard extends AppCompatActivity {
         CSnapHelper.attachToRecyclerView(this.recyclerView);
 
         // Set the static habit list to the adapter
-
+        retrieve();
         eventChangeListener();
 
         // onclick listener for the recyclerview items
@@ -287,6 +287,7 @@ public class Dashboard extends AppCompatActivity {
     public void launchCollection(View CView){
         Intent CIntent = new Intent(Dashboard.this, Collection.class);
         this.startActivity(CIntent);
+
     }
 
 

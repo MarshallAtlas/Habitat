@@ -1,6 +1,8 @@
 package ph.edu.dlsu.mobdeve.florendo.mapa.habitat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -116,5 +118,18 @@ public class Collection extends AppCompatActivity {
         // For simplicity, we'll use the storageReference directly.
         return storageReference;
     }
+
+    public void launchShop (View CView){
+        Intent CIntent = new Intent(Collection.this, Shop.class);
+        this.startActivity(CIntent);
+        this.finish();
+    }
+
+    public void launchCreateHabit (View CView){
+        Intent CIntent = new Intent(Collection.this, CreateHabit.class);
+        this.startActivity(CIntent);
+        this.finish();
+    }
+
 
 }

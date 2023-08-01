@@ -56,11 +56,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="launchCreateHabit"
             app:srcCompat="@drawable/add_icon" />
 
         <ImageView
             android:id="@+id/Collection_Icon"
             android:layout_width="104dp"
+            android:onClick="launchCollection"
             android:layout_height="66dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="25dp"
